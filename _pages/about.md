@@ -16,6 +16,8 @@ You can find my CV here: XX's Curriculum Vitae.
 Publications
 ======
 Hey, Your Secrets Leaked! Detecting and Characterizing Secret Leakage in the Wild
-Jiawei Zhou, Zidong Zhang, Lingyun Ying, Huajun Chai, Jiuxin Cao, Haixin Duan
+
+**Jiawei Zhou**, Zidong Zhang, Lingyun Ying, Huajun Chai, Jiuxin Cao, Haixin Duan
+
 2025 IEEE Symposium on Security and Privacy (S&P)
 
