@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张三 - 个人学术主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 200% 0; }
+            50% { background-position: -200% 0; }
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid #667eea;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+
+        .download-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            margin-left: 10px;
+        }
+
+        .download-link:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: scale(1.05);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .publication-item, .project-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover, .project-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
+        }
+
+        .publication-title, .project-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .publication-authors, .project-desc {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .publication-venue {
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: scale(1.02);
+        }
+
+        .skill-category h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+        }
+
+        .edit-mode {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .edit-mode:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .editable {
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .editable:focus {
+            background: rgba(255, 255, 0, 0.1);
+            border-radius: 5px;
+            padding: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav {
+                position: relative;
+                top: auto;
+                right: auto;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <button class="nav-button" onclick="scrollToSection('about')">关于</button>
+        <button class="nav-button" onclick="scrollToSection('research')">研究</button>
+        <button class="nav-button" onclick="scrollToSection('publications')">论文</button>
+        <button class="nav-button" onclick="scrollToSection('projects')">项目</button>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="profile-img">张</div>
+            <h1 class="editable" contenteditable="false">张三</h1>
+            <p class="subtitle editable" contenteditable="false">计算机科学博士研究生</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span class="editable" contenteditable="false">zhangsan@university.edu</span>
+                </div>
+                <div class="contact-item">
+                    <span>🏫</span>
+                    <span class="editable" contenteditable="false">某某大学计算机学院</span>
+                </div>
+                <div class="contact-item">
+                    <span>🔗</span>
+                    <span class="editable" contenteditable="false">ORCID: 0000-0000-0000-0000</span>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="files/CV.pdf" class="action-btn" target="_blank">
+                    <span>📄</span> 下载简历
+                </a>
+                <a href="https://scholar.google.com/citations?user=你的ID" class="action-btn" target="_blank">
+                    <span>🎓</span> Google Scholar
+                </a>
+                <a href="https://github.com/你的用户名" class="action-btn" target="_blank">
+                    <span>💻</span> GitHub
+                </a>
+            </div>
+        </header>
+
+        <section id="about" class="section">
+            <h2>个人简介</h2>
+            <p class="editable" contenteditable="false">
+                我是某某大学计算机科学专业的博士研究生，主要研究方向包括机器学习、深度学习和自然语言处理。我的研究兴趣集中在大语言模型的优化和应用，以及多模态学习等前沿领域。目前已在顶级会议和期刊发表论文若干篇，并参与多项国家级科研项目。
+            </p>
+        </section>
+
+        <section id="research" class="section">
+            <h2>研究方向</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>机器学习</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">深度学习</span>
+                        <span class="skill-tag">强化学习</span>
+                        <span class="skill-tag">迁移学习</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>自然语言处理</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">大语言模型</span>
+                        <span class="skill-tag">情感分析</span>
+                        <span class="skill-tag">机器翻译</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>计算机视觉</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">图像识别</span>
+                        <span class="skill-tag">目标检测</span>
+                        <span class="skill-tag">多模态学习</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="section">
+            <h2>主要论文</h2>
+            <div class="publication-item">
+                <div class="publication-title editable" contenteditable="false">
+                    Advancing Large Language Models through Novel Optimization Techniques
+                </div>
+                <div class="publication-authors editable" contenteditable="false">
+                    张三, 李四, 王五
+                </div>
+                <div class="publication-venue editable" contenteditable="false">
+                    NeurIPS 2024 (CCF A类)
+                    <a href="files/paper1.pdf" class="download-link" target="_blank">📄 PDF</a>
+                    <a href="https://arxiv.org/abs/2024.12345" class="download-link" target="_blank">🔗 arXiv</a>
+                </div>
+            </div>
+            
+            <div class="publication-item">
+                <div class="publication-title editable" contenteditable="false">
+                    Multi-modal Learning for Enhanced Natural Language Understanding
+                </div>
+                <div class="publication-authors editable" contenteditable="false">
+                    张三, 赵六
+                </div>
+                <div class="publication-venue editable" contenteditable="false">
+                    AAAI 2024 (CCF A类)
+                    <a href="files/paper2.pdf" class="download-link" target="_blank">📄 PDF</a>
+                    <a href="https://github.com/你的用户名/项目名" class="download-link" target="_blank">💻 Code</a>
+                </div>
+            </div>
+
+            <div class="publication-item">
+                <div class="publication-title editable" contenteditable="false">
+                    Efficient Training Strategies for Deep Neural Networks
+                </div>
+                <div class="publication-authors editable" contenteditable="false">
+                    李四, 张三, 王五
+                </div>
+                <div class="publication-venue editable" contenteditable="false">
+                    ICML 2023 (CCF A类)
+                    <a href="files/paper3.pdf" class="download-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <h2>项目经历</h2>
+            <div class="project-item">
+                <div class="project-title editable" contenteditable="false">
+                    国家自然科学基金青年项目 - 基于深度学习的智能对话系统
+                </div>
+                <div class="project-desc editable" contenteditable="false">
+                    项目负责人 | 2023-2025 | 主要研究智能对话系统的核心算法和关键技术
+                </div>
+            </div>
+            
+            <div class="project-item">
+                <div class="project-title editable" contenteditable="false">
+                    某某公司产学研合作项目 - 大规模文本分析平台
+                </div>
+                <div class="project-desc editable" contenteditable="false">
+                    核心开发者 | 2022-2024 | 开发了支持千万级文档的实时分析系统
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 张三. 保留所有权利.</p>
+    </div>
+
+    <button class="edit-mode" onclick="toggleEditMode()">编辑模式</button>
+
+    <script>
+        let isEditMode = false;
+        
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const editables = document.querySelectorAll('.editable');
+            const button = document.querySelector('.edit-mode');
+            
+            editables.forEach(element => {
+                element.contentEditable = isEditMode;
+                if (isEditMode) {
+                    element.style.border = '1px dashed #667eea';
+                } else {
+                    element.style.border = 'none';
+                }
+            });
+            
+            button.textContent = isEditMode ? '保存更改' : '编辑模式';
+            button.style.background = isEditMode ? '#e74c3c' : '#667eea';
+            
+            if (!isEditMode) {
+                // 这里可以添加保存逻辑
+                alert('更改已保存！');
+            }
+        }
+        
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        
+        // 添加平滑滚动效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                toggleEditMode();
+            }
+        });
+    </script>
+</body>
+</html>
